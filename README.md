@@ -10,7 +10,7 @@ It designated to calculate diferent type of grains: Trigo, Maiz and Soja. With i
 Calculate the upper cone, posite and negative values. Also, accept 0 value, for razed Silo or Cell. 
 
 You can add Silos, Cell and Silo Bag, as many as you want.
-You can list all of them, and the program calculate to total of grains that you have in stock.
+You can list all of them, and the program calculate the total of grains that you have in stock.
 
 I used MVC pattern.
 I used Vista Class for Vista, Gestion Class for Model, Silo Class for Silo Object, Celda Class for Cell Object, SiloBolsa Class for SiloBag Object
