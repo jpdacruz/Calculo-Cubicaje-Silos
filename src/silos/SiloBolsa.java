@@ -1,7 +1,5 @@
 package silos;
 
-import javax.swing.JOptionPane;
-
 public class SiloBolsa implements Comparable<SiloBolsa>{
 	
 	private String nombreSiloB;

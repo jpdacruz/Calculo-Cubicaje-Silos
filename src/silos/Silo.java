@@ -1,7 +1,5 @@
 package silos;
 
-import javax.swing.JOptionPane;
-
 public class Silo implements Comparable<Silo>{ // SE IMPLEMENTA PARA LA FUNCION public int compareTo(Silo o)
 	
 	private String nombreSilo;

@@ -1,4 +1,3 @@
-
 package silos;
 
 import javax.swing.JOptionPane;

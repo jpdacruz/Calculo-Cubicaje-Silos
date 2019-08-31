@@ -1,7 +1,5 @@
 package silos;
 
-import javax.swing.JOptionPane;
-
 public class Celda implements Comparable<Celda> {
 
 	private String nombreCelda;
