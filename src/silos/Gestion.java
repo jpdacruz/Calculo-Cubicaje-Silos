@@ -16,147 +16,139 @@ public class Gestion {
 	static double totalCubicajeSoja;
 	static double totalCubicaje;
 	
-		public static void agregarSilo() {
+	public static void agregarSilo() {
                     
-                        //declaracion de las variables que se van a usar en las funciones
-			double radioC; double radio2; double alturaGrano; double volumenCilindro; double cono; double largoChapa;
-                        double altGranoChapas; double diametro; int cantChapasAncho; double altoChapas;
-			double copete; double pesoHecto = 0; double metrosCubicos = 0; double totalSilo = 0; double ph = 0; double altuCono = 0; double altuCopete = 0;
+        //declaracion de las variables que se van a usar en las funciones
+		double radioC; double radio2; double alturaGrano; double volumenCilindro; double cono; double largoChapa;
+                double altGranoChapas; double diametro; int cantChapasAncho; double altoChapas;
+                double copete; double pesoHecto = 0; double metrosCubicos = 0; double totalSilo = 0; double ph = 0; double altuCono = 0; double altuCopete = 0;
 			
-                        String [] tiposGranos = {"Trigo","Maiz","Soja"};
-			String [] tiposConos = {"Recto", "Sin Cono"};
-			String [] tipoSiloMaterial = {"Chapa","Chapa Aereo","Hormigon"};
-                        String [] tiposCopetes = {"Positivo","Negativo","Raso"};
+                String [] tiposGranos = {"Trigo","Maiz","Soja"};
+		String [] tiposConos = {"Recto", "Sin Cono"};
+		String [] tipoSiloMaterial = {"Chapa","Chapa Aereo","Hormigon"};
+                String [] tiposCopetes = {"Positivo","Negativo","Raso"};
 		
 		
-			String nombreSilo = JOptionPane.showInputDialog("Ingrese numero/nombre del silo: ");
-			String tipoSilo = (String) JOptionPane.showInputDialog(null, "Tipo de silo? (Material)", "Material", JOptionPane.DEFAULT_OPTION, null, tipoSiloMaterial, tipoSiloMaterial[0]);
-			String tipoGrano = (String) JOptionPane.showInputDialog(null, "Selecciones tipo de grano", "Grano", JOptionPane.DEFAULT_OPTION, null, tiposGranos, tiposGranos[0]);
+                String nombreSilo = JOptionPane.showInputDialog("Ingrese numero/nombre del silo: ");
+		String tipoSilo = (String) JOptionPane.showInputDialog(null, "Tipo de silo? (Material)", "Material", JOptionPane.DEFAULT_OPTION, null, tipoSiloMaterial, tipoSiloMaterial[0]);
+		String tipoGrano = (String) JOptionPane.showInputDialog(null, "Selecciones tipo de grano", "Grano", JOptionPane.DEFAULT_OPTION, null, tiposGranos, tiposGranos[0]);
 		
-			if ("Trigo".equals(tipoGrano))  {ph = 0.80;} //VALORES POR DEFECTO DEL PESO HECTOLITRICO DEL GRANO SELECCIONADO
-			if ("Maiz".equals(tipoGrano))   {ph = 0.75;}
-			if ("Soja".equals(tipoGrano))   {ph = 0.65;}
+		if ("Trigo".equals(tipoGrano))  {ph = 0.80;} //VALORES POR DEFECTO DEL PESO HECTOLITRICO DEL GRANO SELECCIONADO
+		if ("Maiz".equals(tipoGrano))   {ph = 0.75;}
+		if ("Soja".equals(tipoGrano))   {ph = 0.65;}
 		
-			do { 
-                            String pesoHectoString = JOptionPane.showInputDialog(null, "Ingrese PH Grano: ", ph); // SELECCION DEL VALOR DE PH, CON VALOR DEFAULT PH EN CASO DE NO PONER NADA
-                            pesoHecto = validarNumeros(pesoHectoString);           // FUNCION validarNumeros VA A VALIDAR A LO LARGO DE PROGRAMA LA ENTRADA NUMEROCA DE DATOS         
-                        }   
-                        while (pesoHecto==10000); // VALOR FICTICIO IMPOSIBLE DE LOGRAR PARA MANTENERSE EN EL CICLO DO
+		do { 
+                        String pesoHectoString = JOptionPane.showInputDialog(null, "Ingrese PH Grano: ", ph); // SELECCION DEL VALOR DE PH, CON VALOR DEFAULT PH EN CASO DE NO PONER NADA
+                        pesoHecto = validarNumeros(pesoHectoString);           // FUNCION validarNumeros VA A VALIDAR A LO LARGO DE PROGRAMA LA ENTRADA NUMEROCA DE DATOS         
+                   } while (pesoHecto==10000); // VALOR FICTICIO IMPOSIBLE DE LOGRAR PARA MANTENERSE EN EL CICLO DO
                         
-                        do { 
-                            String largoChapaString = JOptionPane.showInputDialog("Largo de las chapas: (0 si conoce el diametro)", 0);
-                            largoChapa = validarNumeros(largoChapaString);
-                        }   
-                        while (largoChapa==10000);
+                do { 
+                        String largoChapaString = JOptionPane.showInputDialog("Largo de las chapas: (0 si conoce el diametro)", 0);
+                        largoChapa = validarNumeros(largoChapaString);
+                } while (largoChapa==10000);
                         
-                        do {
-                            String cantChapasAnchosString = JOptionPane.showInputDialog("Cantidad de chapas en ancho: (0 si conoce el diametro)", 0);
-                            cantChapasAncho = validarNumerosEnteros(cantChapasAnchosString);
+                do {
+                        String cantChapasAnchosString = JOptionPane.showInputDialog("Cantidad de chapas en ancho: (0 si conoce el diametro)", 0);
+                        cantChapasAncho = validarNumerosEnteros(cantChapasAnchosString);
                         
-                        } while (cantChapasAncho==10000);
+                } while (cantChapasAncho==10000);
                         
-                        do {                        
-                        
-                            String altoChapasString = JOptionPane.showInputDialog("Alto de chapas: ");
-                            altoChapas = validarNumeros(altoChapasString);
+                do {                        
+                        String altoChapasString = JOptionPane.showInputDialog("Alto de chapas: ");
+                        altoChapas = validarNumeros(altoChapasString);
                                                         
-                        } while (altoChapas == 10000);
+                } while (altoChapas == 10000);
                         
-                        do {                        
-                        
-                            String altGranoChapasString = JOptionPane.showInputDialog("Altura del grano en chapas: ");
-                            altGranoChapas = validarNumeros(altGranoChapasString);
+                do {                        
+                        String altGranoChapasString = JOptionPane.showInputDialog("Altura del grano en chapas: ");
+                        altGranoChapas = validarNumeros(altGranoChapasString);
                             
-                        } while (altGranoChapas == 10000);
+                } while (altGranoChapas == 10000);
                         
-                        do {                        
-                        
-                            String diametroString = JOptionPane.showInputDialog("Diametro, (0 si ingreso datos del perimetro: ");
-                            diametro = validarNumeros(diametroString);
+                do {                        
+                        String diametroString = JOptionPane.showInputDialog("Diametro, (0 si ingreso datos del perimetro: ");
+                        diametro = validarNumeros(diametroString);
                             
-                        } while (diametro == 10000);
+                } while (diametro == 10000);
                         
-			if (diametro==0){diametro = (largoChapa*cantChapasAncho)/Math.PI;} //CALCULO VOLUMEN DEL CILINDRO
-			radioC = diametro/2;
-			radio2 = radioC * radioC;
-			alturaGrano = altoChapas * altGranoChapas;
-			volumenCilindro = (Math.PI * radio2 * alturaGrano);
+		if (diametro==0){diametro = (largoChapa*cantChapasAncho)/Math.PI;} //CALCULO VOLUMEN DEL CILINDRO
+                    radioC = diametro/2;
+                    radio2 = radioC * radioC;
+                    alturaGrano = altoChapas * altGranoChapas;
+                    volumenCilindro = (Math.PI * radio2 * alturaGrano);
 			
-			String tipoCono = (String) JOptionPane.showInputDialog(null, "Seleccione tipo de cono: ", "Cono", JOptionPane.DEFAULT_OPTION, null, tiposConos, tiposConos[0]);
+                    String tipoCono = (String) JOptionPane.showInputDialog(null, "Seleccione tipo de cono: ", "Cono", JOptionPane.DEFAULT_OPTION, null, tiposConos, tiposConos[0]);
 			
-			if ("Recto".equals(tipoCono)){ //CALCULO DEL CONO DEL SILO
+		if ("Recto".equals(tipoCono)){ //CALCULO DEL CONO DEL SILO
 				
-                            do {                        
-                        
-                            String altuConoString = JOptionPane.showInputDialog("Altura Cono: 0 para que lo calcule el sistema", 0);
-                            altuCono = validarNumeros(altuConoString);
+                    do {                        
+                        String altuConoString = JOptionPane.showInputDialog("Altura Cono: 0 para que lo calcule el sistema", 0);
+                        altuCono = validarNumeros(altuConoString);
                             
-                            } while (altuCono == 10000);
+                    } while (altuCono == 10000);
                             
-                            	if (altuCono == 0) { // SI SE PONE EL VALOR 0 POR DEFECTO LO CALCULA EN BASE A FORMULA
-					altuCono = (diametro/2)*0.7;
-					}
-				}
+                    if (altuCono == 0) { // SI SE PONE EL VALOR 0 POR DEFECTO LO CALCULA EN BASE A FORMULA
+			altuCono = (diametro/2)*0.7;
+                        }
+                    }
 			
-			if ("Sin Cono".equals(tipoCono)) {
-				altuCono = 0;
-				}
+                    if ("Sin Cono".equals(tipoCono)) {
+			altuCono = 0;
+                    }
                         
-			cono = (Math.PI * radio2 * altuCono)/3;
+                    cono = (Math.PI * radio2 * altuCono)/3;
                         
-                        String tipoCopete = (String) JOptionPane.showInputDialog(null,"Seleccion tipo de copete: ", "Copete", JOptionPane.DEFAULT_OPTION, null, tiposCopetes, tiposCopetes[0]);
+                String tipoCopete = (String) JOptionPane.showInputDialog(null,"Seleccion tipo de copete: ", "Copete", JOptionPane.DEFAULT_OPTION, null, tiposCopetes, tiposCopetes[0]);
                         
-                        if("Positivo".equals(tipoCopete)){ //CALCULO DEL COPETE DEL SILO 3 TIPOS DE COPETE POSITIVO, NEGATIVO, RASO
+                if("Positivo".equals(tipoCopete)){ //CALCULO DEL COPETE DEL SILO 3 TIPOS DE COPETE POSITIVO, NEGATIVO, RASO
                             
-                            do {                        
-                        
-                            String altuCopeteString = JOptionPane.showInputDialog("Altura Copete: 0 para que lo calcule el sistema", 0); 
-                            altuCopete = validarNumeros(altuCopeteString);
+                    do {                        
+                        String altuCopeteString = JOptionPane.showInputDialog("Altura Copete: 0 para que lo calcule el sistema", 0); 
+                        altuCopete = validarNumeros(altuCopeteString);
+                    
+                    } while (altuCopete == 10000);
                             
-                            } while (altuCopete == 10000);
+                    if (altuCopete == 0) { //SI SE INGRESO EL VALOR 0 POR DEFECTO LO CALCULA EN BASE A FORMULA
+                        altuCopete = (diametro/2) *0.5; 
+                    }
                             
-                            if (altuCopete == 0) { //SI SE INGRESO EL VALOR 0 POR DEFECTO LO CALCULA EN BASE A FORMULA
-					altuCopete = (diametro/2) *0.5; 
-				}
-                            
-                            copete = (Math.PI* radio2 * altuCopete) /3;
-                            metrosCubicos = (volumenCilindro+cono+copete); //SELECCIONADO POSITIVO, SUMA COPETE
-                            totalSilo = metrosCubicos*pesoHecto;
+                    copete = (Math.PI* radio2 * altuCopete) /3;
+                    metrosCubicos = (volumenCilindro+cono+copete); //SELECCIONADO POSITIVO, SUMA COPETE
+                    totalSilo = metrosCubicos*pesoHecto;
                           
-                        }
+                }
                         
-                        if("Negativo".equals(tipoCopete)){
+                if("Negativo".equals(tipoCopete)){
                             
-                            do {                        
-                        
-                            String altuCopeteString = JOptionPane.showInputDialog("Altura Copete: 0 para que lo calcule el sistema", 0); 
-                            altuCopete = validarNumeros(altuCopeteString);
+                    do {                        
+                        String altuCopeteString = JOptionPane.showInputDialog("Altura Copete: 0 para que lo calcule el sistema", 0); 
+                        altuCopete = validarNumeros(altuCopeteString);
+                
+                    } while (altuCopete == 10000);
                             
-                            } while (altuCopete == 10000);
+                    if (altuCopete == 0) { 
+                    	altuCopete = (diametro/2) *0.5;
+                    }
                             
-                            if (altuCopete == 0) { 
-					altuCopete = (diametro/2) *0.5;
-				}
-                            
-                            copete = (Math.PI* radio2 * altuCopete) /3;
-                            metrosCubicos = (volumenCilindro+cono-copete);//SELECCIONADO NEGATIVO RESTA EL COPETE
+                    copete = (Math.PI* radio2 * altuCopete) /3;
+                    metrosCubicos = (volumenCilindro+cono-copete);//SELECCIONADO NEGATIVO RESTA EL COPETE
                             totalSilo = metrosCubicos*pesoHecto;
                             
                         }
                         
-			if("Raso".equals(tipoCopete)){
+		if("Raso".equals(tipoCopete)){
                             
-                            metrosCubicos = (volumenCilindro+cono); ////SELECCIONADO RASO NO TOMA EN CUENTA EL COPETE
-                            totalSilo = metrosCubicos*pesoHecto;
+                    metrosCubicos = (volumenCilindro+cono); ////SELECCIONADO RASO NO TOMA EN CUENTA EL COPETE
+                    totalSilo = metrosCubicos*pesoHecto;
                             
-                        }
+                }
 			
-			Silo s = new Silo(nombreSilo, tipoSilo, tipoGrano, pesoHecto, diametro, alturaGrano, tipoCono, altuCono, altuCopete, metrosCubicos, totalSilo);
-                        String datos = s.imprimeSilo(); //FINCION IMPRIME SILO EN CLASE SILO PARA MOSTRAR DATOS DEL SILO
-                        JOptionPane.showMessageDialog(null, datos);
-			silos.add(s); //AGREGA EL SILO AL ARRAYLIST
+		Silo s = new Silo(nombreSilo, tipoSilo, tipoGrano, pesoHecto, diametro, alturaGrano, tipoCono, altuCono, altuCopete, metrosCubicos, totalSilo);
+                String datos = s.imprimeSilo(); //FINCION IMPRIME SILO EN CLASE SILO PARA MOSTRAR DATOS DEL SILO
+                JOptionPane.showMessageDialog(null, datos);
+		silos.add(s); //AGREGA EL SILO AL ARRAYLIST
                         
-		}
+	}
 
 	public static void agregarCelda() { //MISMAS ANOTACIONES QUE AGREGARSILO()
 		
