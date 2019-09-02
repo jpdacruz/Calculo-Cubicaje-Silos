@@ -21,7 +21,7 @@ public class Gestion {
         //declaracion de las variables que se van a usar en las funciones
 		double radioC; double radio2; double alturaGrano; double volumenCilindro; double cono; double largoChapa;
                 double altGranoChapas; double diametro; int cantChapasAncho; double altoChapas;
-                double copete; double pesoHecto = 0; double metrosCubicos = 0; double totalSilo = 0; double ph = 0; double altuCono = 0; double altuCopete = 0;
+                double copete; double pesoHecto; double metrosCubicos = 0; double totalSilo = 0; double ph = 0; double altuCono = 0; double altuCopete = 0;
 			
                 String [] tiposGranos = {"Trigo","Maiz","Soja"};
 		String [] tiposConos = {"Recto", "Sin Cono"};
@@ -37,56 +37,26 @@ public class Gestion {
 		if ("Maiz".equals(tipoGrano))   {ph = 0.75;}
 		if ("Soja".equals(tipoGrano))   {ph = 0.65;}
 		
-		do { 
-                        String pesoHectoString = JOptionPane.showInputDialog(null, "Ingrese PH Grano: ", ph); // SELECCION DEL VALOR DE PH, CON VALOR DEFAULT PH EN CASO DE NO PONER NADA
-                        pesoHecto = validarNumeros(pesoHectoString);           // FUNCION validarNumeros VA A VALIDAR A LO LARGO DE PROGRAMA LA ENTRADA NUMEROCA DE DATOS         
-                   } while (pesoHecto==10000); // VALOR FICTICIO IMPOSIBLE DE LOGRAR PARA MANTENERSE EN EL CICLO DO
-                        
-                do { 
-                        String largoChapaString = JOptionPane.showInputDialog("Largo de las chapas: (0 si conoce el diametro)", 0);
-                        largoChapa = validarNumeros(largoChapaString);
-                } while (largoChapa==10000);
-                        
-                do {
-                        String cantChapasAnchosString = JOptionPane.showInputDialog("Cantidad de chapas en ancho: (0 si conoce el diametro)", 0);
-                        cantChapasAncho = validarNumerosEnteros(cantChapasAnchosString);
-                        
-                } while (cantChapasAncho==10000);
-                        
-                do {                        
-                        String altoChapasString = JOptionPane.showInputDialog("Alto de chapas: ");
-                        altoChapas = validarNumeros(altoChapasString);
-                                                        
-                } while (altoChapas == 10000);
-                        
-                do {                        
-                        String altGranoChapasString = JOptionPane.showInputDialog("Altura del grano en chapas: ");
-                        altGranoChapas = validarNumeros(altGranoChapasString);
-                            
-                } while (altGranoChapas == 10000);
-                        
-                do {                        
-                        String diametroString = JOptionPane.showInputDialog("Diametro, (0 si ingreso datos del perimetro: ");
-                        diametro = validarNumeros(diametroString);
-                            
-                } while (diametro == 10000);
-                        
-		if (diametro==0){diametro = (largoChapa*cantChapasAncho)/Math.PI;} //CALCULO VOLUMEN DEL CILINDRO
+                pesoHecto = ingresarDatosDouble(null, "Ingrese PH grano: ", ph);
+                largoChapa = ingresarDatosDouble(null, "Largo de las chapas: (0 si conoce el diametro)", 0);
+		cantChapasAncho = ingresarDatosEnteros(null, "Cantidad de chapas en ancho: (0 si conoce el diametro)", 0);
+                altoChapas = ingresarDatosDouble(null, "Alto de chapas: ", 0);
+                altGranoChapas = ingresarDatosDouble(null, "Altura del grano en chapas: ", 0);
+                diametro = ingresarDatosDouble(null, "Diametro, (0 si ingreso datos del perimetro: ", 0);
+                
+                if (diametro==0){diametro = (largoChapa*cantChapasAncho)/Math.PI;} //CALCULO VOLUMEN DEL CILINDRO
                     radioC = diametro/2;
                     radio2 = radioC * radioC;
                     alturaGrano = altoChapas * altGranoChapas;
                     volumenCilindro = (Math.PI * radio2 * alturaGrano);
+                
+                //CALCULO DEL CONO DEL SILO    
+                String tipoCono = (String) JOptionPane.showInputDialog(null, "Seleccione tipo de cono: ", "Cono", JOptionPane.DEFAULT_OPTION, null, tiposConos, tiposConos[0]);
 			
-                    String tipoCono = (String) JOptionPane.showInputDialog(null, "Seleccione tipo de cono: ", "Cono", JOptionPane.DEFAULT_OPTION, null, tiposConos, tiposConos[0]);
+		if ("Recto".equals(tipoCono)){ 
 			
-		if ("Recto".equals(tipoCono)){ //CALCULO DEL CONO DEL SILO
-				
-                    do {                        
-                        String altuConoString = JOptionPane.showInputDialog("Altura Cono: 0 para que lo calcule el sistema", 0);
-                        altuCono = validarNumeros(altuConoString);
-                            
-                    } while (altuCono == 10000);
-                            
+                    altuCono = ingresarDatosDouble(null, "Altura Cono: 0 para que lo calcule el sistema", 0);
+                                               
                     if (altuCono == 0) { // SI SE PONE EL VALOR 0 POR DEFECTO LO CALCULA EN BASE A FORMULA
 			altuCono = (diametro/2)*0.7;
                         }
@@ -97,34 +67,28 @@ public class Gestion {
                     }
                         
                     cono = (Math.PI * radio2 * altuCono)/3;
-                        
+                    
+                //CALCULO DEL COPETE DEL SILO 3 TIPOS DE COPETE POSITIVO, NEGATIVO, RASO    
+                
                 String tipoCopete = (String) JOptionPane.showInputDialog(null,"Seleccion tipo de copete: ", "Copete", JOptionPane.DEFAULT_OPTION, null, tiposCopetes, tiposCopetes[0]);
                         
-                if("Positivo".equals(tipoCopete)){ //CALCULO DEL COPETE DEL SILO 3 TIPOS DE COPETE POSITIVO, NEGATIVO, RASO
+                if("Positivo".equals(tipoCopete)){ 
                             
-                    do {                        
-                        String altuCopeteString = JOptionPane.showInputDialog("Altura Copete: 0 para que lo calcule el sistema", 0); 
-                        altuCopete = validarNumeros(altuCopeteString);
+                    altuCopete = ingresarDatosDouble(null, "Altura Copete: 0 para que lo calcule el sistema",0 );
                     
-                    } while (altuCopete == 10000);
-                            
                     if (altuCopete == 0) { //SI SE INGRESO EL VALOR 0 POR DEFECTO LO CALCULA EN BASE A FORMULA
+                        
                         altuCopete = (diametro/2) *0.5; 
                     }
                             
                     copete = (Math.PI* radio2 * altuCopete) /3;
                     metrosCubicos = (volumenCilindro+cono+copete); //SELECCIONADO POSITIVO, SUMA COPETE
                     totalSilo = metrosCubicos*pesoHecto;
-                          
                 }
                         
                 if("Negativo".equals(tipoCopete)){
                             
-                    do {                        
-                        String altuCopeteString = JOptionPane.showInputDialog("Altura Copete: 0 para que lo calcule el sistema", 0); 
-                        altuCopete = validarNumeros(altuCopeteString);
-                
-                    } while (altuCopete == 10000);
+                    altuCopete = ingresarDatosDouble(null, "Altura Copete: 0 para que lo calcule el sistema",0 );
                             
                     if (altuCopete == 0) { 
                     	altuCopete = (diametro/2) *0.5;
@@ -166,79 +130,37 @@ public class Gestion {
 		if ("Maiz".equals(tipoGrano)) {	ph = 0.75;}
 		if ("Soja".equals(tipoGrano)) {	ph = 0.65;}
                 
-                do { 
-                    String pesoHectoString = JOptionPane.showInputDialog(null, "Ingrese PH Grano: ", ph);
-                    pesoHecto = validarNumeros(pesoHectoString);
-                }   
-                    while (pesoHecto==10000);
-		
-                do {                
-                    String anchoCeldaString = JOptionPane.showInputDialog("Ancho de la celda: ");
-                    anchoCelda = validarNumeros(anchoCeldaString);
-                } 
-                    while (anchoCelda==10000);
-                
-                do {                
-                    String largoCeldaString = JOptionPane.showInputDialog("Largo de la celda: ");
-                    largoCelda = validarNumeros(largoCeldaString);
-                } 
-                    while (largoCelda==10000);
-		
-		do {                
-                    String alturaGranoCeldaString = JOptionPane.showInputDialog("Altura del grano: ");
-                    alturaGranoCelda = validarNumeros(alturaGranoCeldaString);
-                } 
-                    while (alturaGranoCelda==10000);
-		
-				
+                pesoHecto = ingresarDatosDouble(null, "Ingrese PH Grano: ", ph);
+                anchoCelda = ingresarDatosDouble(null, "Ancho de la celda: ", 0);
+                largoCelda = ingresarDatosDouble(null, "Largo de la celda: ", 0);
+                alturaGranoCelda = ingresarDatosDouble(null, "Altura del grano: ", 0);
+                		
 		if ("Celda piso conico".equals(tipoCelda)) {
 			
-                        do {                
-                            String altuConoInfString = JOptionPane.showInputDialog("Altura cono inferior: ");
-                            altuConoInf = validarNumeros(altuConoInfString);
-                        }
-                            while (altuConoInf==10000);
-			
-                        do {                
-                            String altuConoSupString = JOptionPane.showInputDialog("Altura cono superior: 0 si esta al ras", 0);
-                            altuConoSup = validarNumeros(altuConoSupString);
-                        }
-                            while (altuConoSup==10000);
-			
-			metrosCubicos = (anchoCelda*largoCelda*alturaGranoCelda) + ((anchoCelda*largoCelda*altuConoInf)/2) + ((anchoCelda*largoCelda*altuConoSup)/2);
-			totalCelda= metrosCubicos * pesoHecto;
-			
-		}
+                    altuConoInf = ingresarDatosDouble(null, "Altura cono inferior: ", 0);
+                    altuConoSup = ingresarDatosDouble(null, "Altura cono superior: 0 si esta al ras", 0); 
+                    
+                    metrosCubicos = (anchoCelda*largoCelda*alturaGranoCelda) + ((anchoCelda*largoCelda*altuConoInf)/2) + ((anchoCelda*largoCelda*altuConoSup)/2);
+                    totalCelda= metrosCubicos * pesoHecto;
+                
+                }
 		
 		if ("Celda piso traposiodal".equals(tipoCelda)) {
 			
-                        do {                
-                            String altuConoInfString = JOptionPane.showInputDialog("Altura cono inferior: ");
-                            altuConoInf = validarNumeros(altuConoInfString);
-                        }
-                            while (altuConoInf==10000);
-                        
-                        do {                
-                            String altuConoSupString = JOptionPane.showInputDialog("Altura cono superior: 0 si esta al ras", 0);
-                            altuConoSup = validarNumeros(altuConoSupString);
-                        }
-                            while (altuConoSup==10000);
+                    altuConoInf = ingresarDatosDouble(null, "Altura cono inferior: ", 0);
+                    altuConoSup = ingresarDatosDouble(null, "Altura cono superior: 0 si esta al ras", 0);
 			
-			metrosCubicos = (largoCelda*anchoCelda*alturaGranoCelda) + ((largoCelda*anchoCelda*altuConoSup/2) + (largoCelda-(altuConoInf*0.577*2))*(anchoCelda-(altuConoInf*0.577*2))*altuConoInf);
-			totalCelda= metrosCubicos * pesoHecto;
+                    metrosCubicos = (largoCelda*anchoCelda*alturaGranoCelda) + ((largoCelda*anchoCelda*altuConoSup/2) + (largoCelda-(altuConoInf*0.577*2))*(anchoCelda-(altuConoInf*0.577*2))*altuConoInf);
+                    totalCelda= metrosCubicos * pesoHecto;
 			
 		}
 		
 		if ("Galpon".equals(tipoCelda)) {
 			
-			do {                
-                            String altuConoSupString = JOptionPane.showInputDialog("Altura cono superior: 0 si esta al ras", 0);
-                            altuConoSup = validarNumeros(altuConoSupString);
-                        }
-                            while (altuConoSup==10000);
+                    altuConoSup = ingresarDatosDouble(null, "Altura cono superior: 0 si esta al ras", 0);
                         
-			metrosCubicos = (anchoCelda*anchoCelda*alturaGranoCelda)+(largoCelda*anchoCelda*altuConoSup/2) ;
-			totalCelda= metrosCubicos * pesoHecto;
+                    metrosCubicos = (anchoCelda*anchoCelda*alturaGranoCelda)+(largoCelda*anchoCelda*altuConoSup/2) ;
+                    totalCelda= metrosCubicos * pesoHecto;
 			
 		}
 				
@@ -262,36 +184,12 @@ public class Gestion {
 		if ("Maiz".equals(tipoGrano)) {	ph = 0.75;}
 		if ("Soja".equals(tipoGrano)) {	ph = 0.65;}
 		
-                do { 
-                    String pesoHectoString = JOptionPane.showInputDialog(null, "Ingrese PH Grano: ", ph);
-                    pesoHecto = validarNumeros(pesoHectoString);
-                }   
-                    while (pesoHecto==10000);
-                
-                do { 
-                    String anchoSBString = JOptionPane.showInputDialog("Ancho del silo bolsa: ");
-                    anchoSB = validarNumeros(anchoSBString);
-                }   
-                    while (anchoSB==10000);
-		
-                do { 
-                    String largoSBString = JOptionPane.showInputDialog("Largo del silo bolsa: ");
-                    largoSB = validarNumeros(largoSBString);
-                }   
-                    while (largoSB==10000);
+                pesoHecto = ingresarDatosDouble(null, "Ingrese PH Grano: ", ph);
+                anchoSB = ingresarDatosDouble(null, "Ancho del silo bolsa: ", 0);
+                largoSB = ingresarDatosDouble(null, "Largo del silo bolsa: ", 0);
+		alturaBase = ingresarDatosDouble(null, "Altura de la base del silo bolsa: ", 0);
+                alturaParabola = ingresarDatosDouble(null, "Altura de la parabola del silo bolsa: ", 0);
 
-                do { 
-                    String alturaBaseString = JOptionPane.showInputDialog("Altura de la base del silo bolsa: ");
-                    alturaBase = validarNumeros(alturaBaseString);
-                }   
-                    while (alturaBase==10000);
-		
-		do { 
-                    String alturaParabolaString = JOptionPane.showInputDialog("Altura de la parabola del silo bolsa: ");
-                    alturaParabola = validarNumeros(alturaParabolaString);
-                }   
-                    while (alturaParabola==10000);
-		
 		rectangulo = (anchoSB * largoSB * alturaBase);
 		parabola = (((anchoSB * largoSB * alturaParabola)*2)/3);
 		metrosCubicosSB = rectangulo + parabola;
@@ -528,5 +426,27 @@ public class Gestion {
         
         return valor;
     }
-}	
 
+    private static double ingresarDatosDouble(Object object, String datos, double datos2) {//funcion para agregar datos decimales por teclado
+        
+        double datoCalcular;
+        
+        do { 
+            String datosString = JOptionPane.showInputDialog(null, datos, datos2); // SELECCION DEL VALOR DE PH, CON VALOR DEFAULT PH EN CASO DE NO PONER NADA
+            datoCalcular = validarNumeros(datosString);           // FUNCION validarNumeros VA A VALIDAR A LO LARGO DE PROGRAMA LA ENTRADA NUMEROCA DE DATOS         
+        } while (datoCalcular==10000);
+        
+        return datoCalcular;
+    }
+
+    private static int ingresarDatosEnteros(Object object, String datos, int datos2) { //funcion para agregar datos enteros por teclado
+        
+        int datoCalcular;
+        do {
+            String datosString = JOptionPane.showInputDialog(null, datos, datos2);
+            datoCalcular = validarNumerosEnteros(datosString); //llamado a funcion para validar los datos
+        } while (datoCalcular==10000);
+        
+        return datoCalcular;
+    }
+}
